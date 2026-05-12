@@ -1,0 +1,12 @@
+fastapi==0.111.0
+uvicorn[standard]
+asyncpg
+sqlalchemy[asyncio]
+pydantic[email]
+python-jose[cryptography]
+passlib[bcrypt]
+python-multipart
+paho-mqtt
+httpx
+python-dotenv
+Pillow
