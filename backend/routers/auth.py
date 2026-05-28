@@ -24,10 +24,14 @@ JWT_EXPIRY_DAYS = 7
 
 
 def _hash_password(plain: str) -> str:
+    if len(plain) > 72:
+        plain = plain[:72]
     return _pwd_ctx.hash(plain)
 
 
 def _verify_password(plain: str, hashed: str) -> bool:
+    if len(plain) > 72:
+        plain = plain[:72]
     return _pwd_ctx.verify(plain, hashed)
 
 
