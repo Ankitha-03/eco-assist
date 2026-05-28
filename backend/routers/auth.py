@@ -109,8 +109,8 @@ async def register(body: UserCreate, db: AsyncSession = Depends(get_db)):
             "location": body.location,
         },
     )
-    await db.commit()
     row = result.fetchone()
+    await db.commit()
     token = _create_token(str(row.id), row.role)
     user_out = UserOut(
         id=row.id,
