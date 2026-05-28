@@ -144,6 +144,36 @@ occasional high-risk readings to trigger the spoilage alert system.
 | Buyer | buyer1@demo.com | demo123 |
 | Buyer | buyer2@demo.com | demo123 |
 
+
+
+---
+
+## Hardware Images
+
+### Project Overview
+![Overview](overviewjpeg)
+
+### ESP32 Setup
+![ESP32](ESP32.jpeg)
+
+### Sensors
+![Sensors](sensors.jpeg)
+
+### Solar Panel
+![Solar](solar.jpeg)
+
+### Solar and Buzzer
+![Solar and Buzzer](solar%20and%20buzzer.jpeg)
+
+### Onions Used for Testing
+![Onions](onions%20used.jpeg)
+
+---
+
+## License
+
+MIT
+
 ---
 
 ## API Reference
