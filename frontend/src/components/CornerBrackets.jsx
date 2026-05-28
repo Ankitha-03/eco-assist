@@ -1,4 +1,4 @@
-export default function CornerBrackets({ color = '#00ff9d', size = 14, thickness = 2, opacity = 0.6 }) {
+export default function CornerBrackets({ color = '#22a855', size = 14, thickness = 2, opacity = 0.6 }) {
   const s = { position: 'absolute', width: size, height: size, opacity }
   const b = `${thickness}px solid ${color}`
   return (

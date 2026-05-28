@@ -11,7 +11,7 @@ import CornerBrackets from '../components/CornerBrackets'
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
 /* ── Sparkline ────────────────────────────────────────────── */
-function Sparkline({ data, color = '#00ff9d' }) {
+function Sparkline({ data, color = '#22a855' }) {
   if (!data || data.length < 2) return <div style={{ width: 60, height: 28 }} />
   const W = 60, H = 28
   const max = Math.max(...data), min = Math.min(...data)
@@ -32,7 +32,7 @@ function HealthGauge({ score }) {
   const r = 76, cx = 100, cy = 100
   const circ = Math.PI * r
   const offset = circ * (1 - score / 100)
-  const color = score >= 75 ? '#00ff9d' : score >= 40 ? '#ffb800' : '#ff2d55'
+  const color = score >= 75 ? '#22a855' : score >= 40 ? '#e07c00' : '#d93025'
   const label = score >= 75 ? 'LOW RISK' : score >= 50 ? 'MEDIUM RISK' : score >= 25 ? 'HIGH RISK' : 'CRITICAL'
   const isCrit = score < 25
 
@@ -42,13 +42,13 @@ function HealthGauge({ score }) {
         {isCrit && (
           <path
             d={`M ${cx - r - 12} ${cy} A ${r + 12} ${r + 12} 0 0 1 ${cx + r + 12} ${cy}`}
-            fill="none" stroke="rgba(255,45,85,0.15)" strokeWidth={8} strokeLinecap="round"
+            fill="none" stroke="rgba(217, 48, 37,0.15)" strokeWidth={8} strokeLinecap="round"
             style={{ animation: 'pulseCrit 1.8s ease-in-out infinite' }}
           />
         )}
         {/* Track */}
         <path d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`}
-          fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth={14} strokeLinecap="round" />
+          fill="none" stroke="rgba(34, 139, 87, 0.12)" strokeWidth={14} strokeLinecap="round" />
         {/* Fill */}
         <path d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`}
           fill="none" stroke={color} strokeWidth={14} strokeLinecap="round"
@@ -63,12 +63,12 @@ function HealthGauge({ score }) {
           style={{ filter: `drop-shadow(0 0 6px ${color}90)` }}>
           {score.toFixed(0)}
         </text>
-        <text x={cx} y={cy + 16} textAnchor="middle" fill="#5a8a7a"
+        <text x={cx} y={cy + 16} textAnchor="middle" fill="#3d6b50"
           fontSize="9" fontFamily="Orbitron" letterSpacing="2">
           {label}
         </text>
       </svg>
-      <div style={{ fontSize: '0.68rem', color: '#3a5a4a', textTransform: 'uppercase', letterSpacing: '0.12em', marginTop: -2 }}>
+      <div style={{ fontSize: '0.68rem', color: '#7a9e8a', textTransform: 'uppercase', letterSpacing: '0.12em', marginTop: -2 }}>
         Crop Health Score
       </div>
     </div>
@@ -76,8 +76,8 @@ function HealthGauge({ score }) {
 }
 
 /* ── Sensor Card ──────────────────────────────────────────── */
-function SensorCard({ label, value, unit, icon, color = '#e8f4f0', danger, sparkData }) {
-  const c = danger ? '#ff2d55' : color
+function SensorCard({ label, value, unit, icon, color = '#1a2e22', danger, sparkData }) {
+  const c = danger ? '#d93025' : color
   return (
     <div
       className={`glass-card${danger ? ' card-critical' : ''}`}
@@ -85,14 +85,14 @@ function SensorCard({ label, value, unit, icon, color = '#e8f4f0', danger, spark
     >
       <CornerBrackets color={c} size={10} opacity={0.45} />
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-        <span style={{ fontSize: '0.68rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#5a8a7a', fontWeight: 600 }}>
+        <span style={{ fontSize: '0.68rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#3d6b50', fontWeight: 600 }}>
           {label}
         </span>
         <span style={{ fontSize: '1.15rem' }}>{icon}</span>
       </div>
       <div style={{ fontFamily: 'Space Grotesk', fontSize: '2rem', fontWeight: 700, lineHeight: 1, color: c }}>
         {value != null ? value.toFixed(1) : '—'}
-        <span style={{ fontSize: '0.85rem', fontWeight: 400, color: '#3a5a4a', marginLeft: 4 }}>{unit}</span>
+        <span style={{ fontSize: '0.85rem', fontWeight: 400, color: '#7a9e8a', marginLeft: 4 }}>{unit}</span>
       </div>
       {sparkData && sparkData.length > 1 && (
         <div style={{ marginTop: 8 }}>
@@ -112,24 +112,24 @@ function AlertItem({ alert, onRead }) {
       style={{
         display: 'flex', alignItems: 'flex-start', gap: 12, padding: '11px 14px',
         borderRadius: 10, marginBottom: 8,
-        background: isCrit ? 'rgba(255,45,85,0.07)' : 'rgba(255,184,0,0.05)',
-        border: `1px solid ${isCrit ? 'rgba(255,45,85,0.28)' : 'rgba(255,184,0,0.22)'}`,
-        borderLeft: `3px solid ${isCrit ? '#ff2d55' : '#ffb800'}`,
+        background: isCrit ? 'rgba(217, 48, 37,0.07)' : 'rgba(224, 124, 0,0.05)',
+        border: `1px solid ${isCrit ? 'rgba(217, 48, 37,0.28)' : 'rgba(224, 124, 0,0.22)'}`,
+        borderLeft: `3px solid ${isCrit ? '#d93025' : '#e07c00'}`,
         animation: isCrit && !alert.is_read ? 'pulseCrit 2s ease-in-out infinite' : 'none',
       }}>
       <span style={{ fontSize: '1rem', marginTop: 1 }}>{isCrit ? '🚨' : '⚠️'}</span>
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontSize: '0.83rem', fontWeight: 600, color: '#e8f4f0', lineHeight: 1.4 }}>{alert.message}</div>
-        <div style={{ fontSize: '0.7rem', color: '#5a8a7a', marginTop: 3 }}>
+        <div style={{ fontSize: '0.83rem', fontWeight: 600, color: '#1a2e22', lineHeight: 1.4 }}>{alert.message}</div>
+        <div style={{ fontSize: '0.7rem', color: '#3d6b50', marginTop: 3 }}>
           {new Date(alert.created_at).toLocaleString()}
         </div>
       </div>
       {!alert.is_read && (
         <button
           style={{
-            background: 'rgba(0,255,157,0.07)', border: '1px solid rgba(0,255,157,0.2)',
-            color: '#00ff9d', borderRadius: 6, padding: '3px 9px',
-            fontSize: '0.68rem', fontWeight: 600, cursor: 'none', fontFamily: 'Space Grotesk',
+            background: 'rgba(34, 139, 87,0.07)', border: '1px solid rgba(34, 139, 87,0.2)',
+            color: '#22a855', borderRadius: 6, padding: '3px 9px',
+            fontSize: '0.68rem', fontWeight: 600, cursor: 'pointer', fontFamily: 'Space Grotesk',
             whiteSpace: 'nowrap', flexShrink: 0,
           }}
           onClick={() => onRead(alert.id)}>
@@ -146,15 +146,15 @@ function ChartTooltip({ active, payload, label }) {
   const val = payload[0]?.value
   return (
     <div style={{
-      background: 'rgba(4,12,22,0.95)', border: '1px solid rgba(0,255,157,0.25)',
+      background: 'rgba(255,255,255,0.95)', border: '1px solid rgba(34, 139, 87,0.25)',
       borderRadius: 10, padding: '10px 14px', backdropFilter: 'blur(20px)',
       fontFamily: 'Space Grotesk', fontSize: '0.8rem',
     }}>
-      <div style={{ color: '#5a8a7a', marginBottom: 4 }}>
+      <div style={{ color: '#3d6b50', marginBottom: 4 }}>
         {label ? new Date(label).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}
       </div>
-      <div style={{ color: val >= 75 ? '#00ff9d' : val >= 40 ? '#ffb800' : '#ff2d55', fontWeight: 700, fontSize: '1rem' }}>
-        {val?.toFixed(1)} <span style={{ fontSize: '0.7rem', color: '#5a8a7a', fontWeight: 400 }}>health score</span>
+      <div style={{ color: val >= 75 ? '#22a855' : val >= 40 ? '#e07c00' : '#d93025', fontWeight: 700, fontSize: '1rem' }}>
+        {val?.toFixed(1)} <span style={{ fontSize: '0.7rem', color: '#7a9e8a', fontWeight: 400 }}>health score</span>
       </div>
     </div>
   )
@@ -255,7 +255,7 @@ function ListingModal({ devices, onClose, onCreated }) {
   )
 }
 
-const scoreColor = (s) => (s >= 75 ? '#00ff9d' : s >= 40 ? '#ffb800' : '#ff2d55')
+const scoreColor = (s) => (s >= 75 ? '#22a855' : s >= 40 ? '#e07c00' : '#d93025')
 
 /* ══════════════════════════════════════════════════════════ */
 export default function FarmerDashboard() {
@@ -337,7 +337,7 @@ export default function FarmerDashboard() {
         if (msg.type === 'telemetry' && selectedDevice && msg.device_id === selectedDevice.id) {
           setTelemetry((prev) => [...prev, msg].slice(-50))
         }
-      } catch {}
+      } catch { }
     }
     return () => ws.close()
   }, [user.id, selectedDevice])
@@ -387,40 +387,40 @@ export default function FarmerDashboard() {
       {/* ── SIDEBAR ───────────────────────────────────── */}
       <aside className="sidebar" style={{ display: 'flex', flexDirection: 'column' }}>
         {/* Logo */}
-        <div style={{ padding: '22px 20px 18px', borderBottom: '1px solid rgba(0,255,157,0.08)' }}>
-          <div style={{ fontFamily: 'Orbitron', fontSize: '1rem', fontWeight: 700, color: '#00ff9d', letterSpacing: '0.08em' }}>
+        <div style={{ padding: '22px 20px 18px', borderBottom: '1px solid rgba(34, 139, 87,0.08)' }}>
+          <div style={{ fontFamily: 'Orbitron', fontSize: '1rem', fontWeight: 700, color: '#22a855', letterSpacing: '0.08em' }}>
             🌿 ECO-ASSIST
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 8 }}>
             <span className="live-dot" style={{ width: 6, height: 6 }} />
-            <span style={{ fontSize: '0.68rem', color: connected ? '#00ff9d' : '#5a8a7a', letterSpacing: '0.1em', fontFamily: 'Orbitron' }}>
+            <span style={{ fontSize: '0.68rem', color: connected ? '#22a855' : '#3d6b50', letterSpacing: '0.1em', fontFamily: 'Orbitron' }}>
               {connected ? 'LIVE' : 'OFFLINE'}
             </span>
           </div>
         </div>
 
         {/* Farmer avatar */}
-        <div style={{ padding: '18px 20px 14px', borderBottom: '1px solid rgba(0,255,157,0.06)' }}>
+        <div style={{ padding: '18px 20px 14px', borderBottom: '1px solid rgba(34, 139, 87,0.06)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <div style={{
               width: 40, height: 40, borderRadius: '50%',
-              background: 'linear-gradient(135deg, rgba(0,255,157,0.2), rgba(0,212,255,0.1))',
-              border: '2px solid rgba(0,255,157,0.35)',
+              background: 'linear-gradient(135deg, rgba(34, 139, 87,0.2), rgba(33, 150, 168,0.1))',
+              border: '2px solid rgba(34, 139, 87,0.35)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontFamily: 'Space Grotesk', fontWeight: 700, fontSize: '1rem', color: '#00ff9d',
+              fontFamily: 'Space Grotesk', fontWeight: 700, fontSize: '1rem', color: '#22a855',
             }}>
               {(user.full_name || 'F')[0].toUpperCase()}
             </div>
             <div>
-              <div style={{ fontSize: '0.875rem', fontWeight: 600, color: '#e8f4f0' }}>{user.full_name || 'Farmer'}</div>
-              <div style={{ fontSize: '0.72rem', color: '#5a8a7a', marginTop: 2 }}>{user.location || 'Farmer Portal'}</div>
+              <div style={{ fontSize: '0.875rem', fontWeight: 600, color: '#1a2e22' }}>{user.full_name || 'Farmer'}</div>
+              <div style={{ fontSize: '0.72rem', color: '#3d6b50', marginTop: 2 }}>{user.location || 'Farmer Portal'}</div>
             </div>
           </div>
         </div>
 
         {/* Device selector */}
         <div style={{ padding: '16px 20px', flex: 1, overflowY: 'auto' }}>
-          <div style={{ fontSize: '0.62rem', textTransform: 'uppercase', letterSpacing: '0.15em', color: '#3a5a4a', marginBottom: 10, fontFamily: 'Orbitron' }}>
+          <div style={{ fontSize: '0.62rem', textTransform: 'uppercase', letterSpacing: '0.15em', color: '#7a9e8a', marginBottom: 10, fontFamily: 'Orbitron' }}>
             My Devices
           </div>
           {devices.map((d) => (
@@ -428,20 +428,20 @@ export default function FarmerDashboard() {
               style={{
                 display: 'block', width: '100%', textAlign: 'left',
                 padding: '10px 12px', borderRadius: 8, border: 'none',
-                background: selectedDevice?.id === d.id ? 'rgba(0,255,157,0.08)' : 'transparent',
-                color: selectedDevice?.id === d.id ? '#00ff9d' : '#7a9e8e',
-                cursor: 'none', marginBottom: 4, fontFamily: 'Inter',
-                borderLeft: `3px solid ${selectedDevice?.id === d.id ? '#00ff9d' : 'transparent'}`,
+                background: selectedDevice?.id === d.id ? 'rgba(34, 139, 87,0.08)' : 'transparent',
+                color: selectedDevice?.id === d.id ? '#22a855' : '#3d6b50',
+                cursor: 'pointer', marginBottom: 4, fontFamily: 'Inter',
+                borderLeft: `3px solid ${selectedDevice?.id === d.id ? '#22a855' : 'transparent'}`,
                 transition: 'all 0.2s ease',
               }}>
               <div style={{ fontWeight: 600, fontSize: '0.85rem' }}>📡 {d.device_name}</div>
-              <div style={{ fontSize: '0.72rem', color: '#3a5a4a', marginTop: 2 }}>{d.location || d.mac_address}</div>
+              <div style={{ fontSize: '0.72rem', color: '#7a9e8a', marginTop: 2 }}>{d.location || d.mac_address}</div>
             </button>
           ))}
         </div>
 
         {/* Logout */}
-        <div style={{ padding: '14px 20px', borderTop: '1px solid rgba(0,255,157,0.06)' }}>
+        <div style={{ padding: '14px 20px', borderTop: '1px solid rgba(34, 139, 87,0.06)' }}>
           <button className="btn btn-ghost btn-sm w-full" onClick={logout}>
             <LogOut size={14} /> Sign Out
           </button>
@@ -454,10 +454,10 @@ export default function FarmerDashboard() {
         {/* Top bar */}
         <motion.div {...cardAnim(0)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 }}>
           <div>
-            <h1 className="font-orbitron" style={{ fontSize: '1.3rem', fontWeight: 700, color: '#e8f4f0', letterSpacing: '0.05em' }}>
+            <h1 className="font-orbitron" style={{ fontSize: '1.3rem', fontWeight: 700, color: '#1a2e22', letterSpacing: '0.05em' }}>
               FARMER DASHBOARD
             </h1>
-            <div style={{ fontSize: '0.72rem', color: '#5a8a7a', marginTop: 4, fontFamily: 'Orbitron', letterSpacing: '0.1em' }}>
+            <div style={{ fontSize: '0.72rem', color: '#3d6b50', marginTop: 4, fontFamily: 'Orbitron', letterSpacing: '0.1em' }}>
               {time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
               {selectedDevice && ` · 📡 ${selectedDevice.device_name}`}
             </div>
@@ -469,7 +469,7 @@ export default function FarmerDashboard() {
                 {unreadCount > 0 && (
                   <span style={{
                     position: 'absolute', top: -4, right: -4,
-                    background: '#ff2d55', color: 'white', fontSize: '0.6rem',
+                    background: '#d93025', color: 'white', fontSize: '0.6rem',
                     borderRadius: '50%', width: 17, height: 17,
                     display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700,
                     animation: 'pulseBadge 1.5s ease infinite',
@@ -491,13 +491,13 @@ export default function FarmerDashboard() {
               style={{
                 display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px',
                 borderRadius: 10, marginBottom: 10,
-                background: a.severity === 'critical' ? 'rgba(255,45,85,0.1)' : 'rgba(255,184,0,0.08)',
-                border: `1px solid ${a.severity === 'critical' ? 'rgba(255,45,85,0.4)' : 'rgba(255,184,0,0.35)'}`,
-                borderLeft: `4px solid ${a.severity === 'critical' ? '#ff2d55' : '#ffb800'}`,
+                background: a.severity === 'critical' ? 'rgba(217, 48, 37,0.1)' : 'rgba(224, 124, 0,0.08)',
+                border: `1px solid ${a.severity === 'critical' ? 'rgba(217, 48, 37,0.4)' : 'rgba(224, 124, 0,0.35)'}`,
+                borderLeft: `4px solid ${a.severity === 'critical' ? '#d93025' : '#e07c00'}`,
               }}>
               <span>{a.severity === 'critical' ? '🚨' : '⚠️'}</span>
-              <span style={{ flex: 1, fontSize: '0.875rem', color: '#e8f4f0' }}>{a.message}</span>
-              <button style={{ background: 'none', border: 'none', cursor: 'none', color: '#5a8a7a' }}
+              <span style={{ flex: 1, fontSize: '0.875rem', color: '#1a2e22' }}>{a.message}</span>
+              <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#3d6b50' }}
                 onClick={() => setLiveAlerts((p) => p.filter((_, idx) => idx !== i))}>
                 <X size={14} />
               </button>
@@ -517,18 +517,18 @@ export default function FarmerDashboard() {
 
               <SensorCard
                 label="Temperature" value={latest?.temperature} unit="°C" icon="🌡️"
-                color={latest?.temperature > 15 ? '#ff2d55' : '#00ff9d'}
+                color={latest?.temperature > 15 ? '#d93025' : '#22a855'}
                 danger={latest?.temperature > 25}
                 sparkData={sparkTemp}
               />
               <SensorCard
                 label="Humidity" value={latest?.humidity} unit="%" icon="💧"
-                color={latest?.humidity < 70 ? '#ffb800' : '#00ff9d'}
+                color={latest?.humidity < 70 ? '#e07c00' : '#22a855'}
                 sparkData={sparkHumid}
               />
               <SensorCard
                 label="VOC Level" value={latest?.voc_level} unit="ppm" icon="🌫️"
-                color={latest?.voc_level > 200 ? '#ffb800' : '#00ff9d'}
+                color={latest?.voc_level > 200 ? '#e07c00' : '#22a855'}
                 danger={latest?.voc_level > 500}
                 sparkData={sparkVoc}
               />
@@ -538,13 +538,13 @@ export default function FarmerDashboard() {
             <motion.div {...cardAnim(0.14)} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginBottom: 16 }}>
               <SensorCard
                 label="Ammonia" value={latest?.ammonia_level} unit="ppm" icon="⚗️"
-                color={latest?.ammonia_level > 25 ? '#ff2d55' : '#00ff9d'}
+                color={latest?.ammonia_level > 25 ? '#d93025' : '#22a855'}
                 danger={latest?.ammonia_level > 50}
                 sparkData={sparkAmm}
               />
               <SensorCard
                 label="Pressure" value={latest?.pressure} unit="hPa" icon="🔵"
-                color="#00d4ff"
+                color="#2196a8"
               />
             </motion.div>
 
@@ -553,13 +553,13 @@ export default function FarmerDashboard() {
               <CornerBrackets color={healthColor} size={12} opacity={0.5} />
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
                 <div>
-                  <h3 style={{ fontSize: '0.9rem', fontWeight: 600, color: '#e8f4f0' }}>Health Score History</h3>
-                  <div style={{ fontSize: '0.7rem', color: '#5a8a7a', marginTop: 3 }}>Last {telemetry.length} readings</div>
+                  <h3 style={{ fontSize: '0.9rem', fontWeight: 600, color: '#1a2e22' }}>Health Score History</h3>
+                  <div style={{ fontSize: '0.7rem', color: '#3d6b50', marginTop: 3 }}>Last {telemetry.length} readings</div>
                 </div>
-                <div style={{ display: 'flex', gap: 16, fontSize: '0.68rem', color: '#3a5a4a' }}>
-                  <span style={{ color: '#00ff9d' }}>── &gt;75 Healthy</span>
-                  <span style={{ color: '#ffb800' }}>── &gt;50 Moderate</span>
-                  <span style={{ color: '#ff2d55' }}>── &lt;25 Critical</span>
+                <div style={{ display: 'flex', gap: 16, fontSize: '0.68rem', color: '#7a9e8a' }}>
+                  <span style={{ color: '#22a855' }}>── &gt;75 Healthy</span>
+                  <span style={{ color: '#e07c00' }}>── &gt;50 Moderate</span>
+                  <span style={{ color: '#d93025' }}>── &lt;25 Critical</span>
                 </div>
               </div>
               <ResponsiveContainer width="100%" height={160}>
@@ -572,13 +572,13 @@ export default function FarmerDashboard() {
                   </defs>
                   <XAxis dataKey="recorded_at"
                     tickFormatter={(v) => new Date(v).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                    tick={{ fill: '#3a5a4a', fontSize: 10, fontFamily: 'Inter' }} tickLine={false} axisLine={false} />
+                    tick={{ fill: '#7a9e8a', fontSize: 10, fontFamily: 'Inter' }} tickLine={false} axisLine={false} />
                   <YAxis domain={[0, 100]}
-                    tick={{ fill: '#3a5a4a', fontSize: 10 }} tickLine={false} axisLine={false} />
+                    tick={{ fill: '#7a9e8a', fontSize: 10 }} tickLine={false} axisLine={false} />
                   <Tooltip content={<ChartTooltip />} />
-                  <ReferenceLine y={75} stroke="rgba(0,255,157,0.25)" strokeDasharray="4 4" />
-                  <ReferenceLine y={50} stroke="rgba(255,184,0,0.25)" strokeDasharray="4 4" />
-                  <ReferenceLine y={25} stroke="rgba(255,45,85,0.25)" strokeDasharray="4 4" />
+                  <ReferenceLine y={75} stroke="rgba(34, 139, 87,0.25)" strokeDasharray="4 4" />
+                  <ReferenceLine y={50} stroke="rgba(224, 124, 0,0.25)" strokeDasharray="4 4" />
+                  <ReferenceLine y={25} stroke="rgba(217, 48, 37,0.25)" strokeDasharray="4 4" />
                   <Area
                     type="monotone" dataKey="health_score"
                     stroke={healthColor} strokeWidth={2} fill="url(#healthGrad)"
@@ -592,11 +592,23 @@ export default function FarmerDashboard() {
             <motion.div {...cardAnim(0.26)} style={{ display: 'grid', gridTemplateColumns: '55% 1fr', gap: 14, marginBottom: 16 }}>
               {/* Camera */}
               <div className="glass-card" style={{ padding: 22, position: 'relative' }}>
-                <CornerBrackets color="#00d4ff" size={12} opacity={0.6} />
+                <CornerBrackets color="#2196a8" size={12} opacity={0.6} />
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
-                  <h3 style={{ fontSize: '0.9rem', color: '#e8f4f0' }}>Camera Feed</h3>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.68rem', color: '#00ff9d', fontFamily: 'Orbitron', letterSpacing: '0.1em' }}>
-                    <span className="live-dot" style={{ width: 6, height: 6 }} /> LIVE
+                  <h3 style={{ fontSize: '0.9rem', color: '#1a2e22' }}>Camera Feed</h3>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <button
+                      onClick={() => window.open('/qr-camera', '_blank')}
+                      style={{
+                        background: 'rgba(34,139,87,0.08)', border: '1px solid rgba(34,139,87,0.25)',
+                        color: '#22a855', borderRadius: 6, padding: '4px 10px',
+                        fontSize: '0.68rem', fontWeight: 600, cursor: 'pointer',
+                        fontFamily: 'Space Grotesk, sans-serif', whiteSpace: 'nowrap',
+                      }}>
+                      📱 Mobile Camera →
+                    </button>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.68rem', color: '#22a855', fontFamily: 'Orbitron', letterSpacing: '0.1em' }}>
+                      <span className="live-dot" style={{ width: 6, height: 6 }} /> LIVE
+                    </div>
                   </div>
                 </div>
                 {latestSnap ? (
@@ -608,10 +620,10 @@ export default function FarmerDashboard() {
                       borderRadius: 10,
                     }} />
                     {/* Corner brackets on image */}
-                    <div style={{ position: 'absolute', top: 6, left: 6, zIndex: 3, width: 16, height: 16, borderTop: '2px solid #00d4ff', borderLeft: '2px solid #00d4ff', borderRadius: '2px 0 0 0', opacity: 0.8 }} />
-                    <div style={{ position: 'absolute', top: 6, right: 6, zIndex: 3, width: 16, height: 16, borderTop: '2px solid #00d4ff', borderRight: '2px solid #00d4ff', borderRadius: '0 2px 0 0', opacity: 0.8 }} />
-                    <div style={{ position: 'absolute', bottom: 6, left: 6, zIndex: 3, width: 16, height: 16, borderBottom: '2px solid #00d4ff', borderLeft: '2px solid #00d4ff', borderRadius: '0 0 0 2px', opacity: 0.8 }} />
-                    <div style={{ position: 'absolute', bottom: 6, right: 6, zIndex: 3, width: 16, height: 16, borderBottom: '2px solid #00d4ff', borderRight: '2px solid #00d4ff', borderRadius: '0 0 2px 0', opacity: 0.8 }} />
+                    <div style={{ position: 'absolute', top: 6, left: 6, zIndex: 3, width: 16, height: 16, borderTop: '2px solid #2196a8', borderLeft: '2px solid #2196a8', borderRadius: '2px 0 0 0', opacity: 0.8 }} />
+                    <div style={{ position: 'absolute', top: 6, right: 6, zIndex: 3, width: 16, height: 16, borderTop: '2px solid #2196a8', borderRight: '2px solid #2196a8', borderRadius: '0 2px 0 0', opacity: 0.8 }} />
+                    <div style={{ position: 'absolute', bottom: 6, left: 6, zIndex: 3, width: 16, height: 16, borderBottom: '2px solid #2196a8', borderLeft: '2px solid #2196a8', borderRadius: '0 0 0 2px', opacity: 0.8 }} />
+                    <div style={{ position: 'absolute', bottom: 6, right: 6, zIndex: 3, width: 16, height: 16, borderBottom: '2px solid #2196a8', borderRight: '2px solid #2196a8', borderRadius: '0 0 2px 0', opacity: 0.8 }} />
                     <img
                       src={`${API_BASE}${latestSnap.image_url}`}
                       alt="Latest snapshot"
@@ -621,7 +633,7 @@ export default function FarmerDashboard() {
                     {(latestSnap.mold_detected || latestSnap.sprout_detected) && (
                       <div style={{
                         position: 'absolute', inset: 0, zIndex: 4,
-                        background: 'rgba(255,45,85,0.55)',
+                        background: 'rgba(217, 48, 37,0.55)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                         color: 'white', fontWeight: 800, fontSize: '0.95rem', borderRadius: 10,
                         letterSpacing: '0.08em', fontFamily: 'Space Grotesk',
@@ -632,13 +644,13 @@ export default function FarmerDashboard() {
                     )}
                   </div>
                 ) : (
-                  <div style={{ textAlign: 'center', padding: '36px 0', color: '#3a5a4a', fontSize: '0.875rem', borderRadius: 10, border: '1px dashed rgba(0,212,255,0.15)' }}>
+                  <div style={{ textAlign: 'center', padding: '36px 0', color: '#7a9e8a', fontSize: '0.875rem', borderRadius: 10, border: '1px dashed rgba(33, 150, 168,0.15)' }}>
                     <div style={{ fontSize: '2.2rem', marginBottom: 10, opacity: 0.5 }}>📷</div>
                     No camera snapshots yet
                   </div>
                 )}
                 {latestSnap && (
-                  <div style={{ fontSize: '0.7rem', color: '#3a5a4a', marginTop: 10 }}>
+                  <div style={{ fontSize: '0.7rem', color: '#7a9e8a', marginTop: 10 }}>
                     📅 {new Date(latestSnap.captured_at).toLocaleString()}
                   </div>
                 )}
@@ -647,14 +659,14 @@ export default function FarmerDashboard() {
               {/* Alerts */}
               <div className="glass-card" style={{ padding: 22, position: 'relative', display: 'flex', flexDirection: 'column' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
-                  <h3 style={{ fontSize: '0.9rem', color: '#e8f4f0' }}>Alerts</h3>
+                  <h3 style={{ fontSize: '0.9rem', color: '#1a2e22' }}>Alerts</h3>
                   <span className={`badge badge-${alerts.filter(a => !a.is_read).length > 0 ? 'red' : 'muted'}`}>
                     {alerts.filter(a => !a.is_read).length} unread
                   </span>
                 </div>
                 <div style={{ flex: 1, overflowY: 'auto', maxHeight: 220 }}>
                   {alerts.length === 0 ? (
-                    <p style={{ color: '#3a5a4a', fontSize: '0.85rem' }}>✅ All systems normal.</p>
+                    <p style={{ color: '#7a9e8a', fontSize: '0.85rem' }}>✅ All systems normal.</p>
                   ) : alerts.map((a) => <AlertItem key={a.id} alert={a} onRead={markRead} />)}
                 </div>
               </div>
@@ -665,7 +677,7 @@ export default function FarmerDashboard() {
         {/* ── LISTINGS TABLE ────────────────────────── */}
         <motion.div {...cardAnim(0.32)} className="glass-card" style={{ padding: '22px 24px', position: 'relative' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
-            <h3 style={{ fontSize: '0.95rem', color: '#e8f4f0' }}>My Listings</h3>
+            <h3 style={{ fontSize: '0.95rem', color: '#1a2e22' }}>My Listings</h3>
             <button className="btn btn-outline btn-sm" onClick={() => setShowListing(true)}>
               <Plus size={14} /> New Listing
             </button>
@@ -685,21 +697,21 @@ export default function FarmerDashboard() {
               <tbody>
                 {listings.length === 0 ? (
                   <tr>
-                    <td colSpan={6} style={{ textAlign: 'center', color: '#3a5a4a', padding: 28 }}>
+                    <td colSpan={6} style={{ textAlign: 'center', color: '#7a9e8a', padding: 28 }}>
                       No listings yet. Create your first one!
                     </td>
                   </tr>
                 ) : listings.map((l) => (
                   <tr key={l.id} style={{ transition: 'background 0.15s' }}>
-                    <td style={{ fontWeight: 600, color: '#e8f4f0' }}>{l.produce_name}</td>
-                    <td style={{ color: '#7a9e8e' }}>{l.quantity_kg}</td>
-                    <td style={{ color: '#00ff9d', fontWeight: 600 }}>₹{l.asking_price_per_kg}</td>
+                    <td style={{ fontWeight: 600, color: '#1a2e22' }}>{l.produce_name}</td>
+                    <td style={{ color: '#3d6b50' }}>{l.quantity_kg}</td>
+                    <td style={{ color: '#22a855', fontWeight: 600 }}>₹{l.asking_price_per_kg}</td>
                     <td>
                       {l.health_score != null
                         ? <span style={{ color: scoreColor(l.health_score), fontWeight: 700, fontFamily: 'Space Grotesk' }}>
-                            {l.health_score.toFixed(0)}
-                          </span>
-                        : <span style={{ color: '#3a5a4a' }}>—</span>}
+                          {l.health_score.toFixed(0)}
+                        </span>
+                        : <span style={{ color: '#7a9e8a' }}>—</span>}
                     </td>
                     <td>
                       <span className={`badge badge-${l.status === 'active' ? 'green' : l.status === 'sold' ? 'blue' : l.status === 'negotiating' ? 'amber' : 'muted'}`}>
@@ -732,19 +744,19 @@ export default function FarmerDashboard() {
                 <button className="btn btn-ghost btn-sm" onClick={() => setShowBidsFor(null)}><X size={16} /></button>
               </div>
               {(bids[showBidsFor] || []).length === 0 ? (
-                <p style={{ color: '#5a8a7a', textAlign: 'center', padding: '24px 0' }}>No bids yet on this listing.</p>
+                <p style={{ color: '#3d6b50', textAlign: 'center', padding: '24px 0' }}>No bids yet on this listing.</p>
               ) : (bids[showBidsFor] || []).map((b) => (
                 <div key={b.id} className="card mb-2" style={{ padding: 16 }}>
                   <div className="flex items-center justify-between">
                     <div>
-                      <div style={{ fontWeight: 700, color: '#00ff9d', fontSize: '1.1rem', fontFamily: 'Space Grotesk' }}>
+                      <div style={{ fontWeight: 700, color: '#22a855', fontSize: '1.1rem', fontFamily: 'Space Grotesk' }}>
                         ₹{b.offered_price_per_kg}/kg
                       </div>
                       {b.message && (
-                        <div style={{ fontSize: '0.85rem', color: '#5a8a7a', marginTop: 4 }}>"{b.message}"</div>
+                        <div style={{ fontSize: '0.85rem', color: '#3d6b50', marginTop: 4 }}>"{b.message}"</div>
                       )}
                       {b.counter_price && (
-                        <div style={{ fontSize: '0.85rem', color: '#ffb800', marginTop: 4 }}>
+                        <div style={{ fontSize: '0.85rem', color: '#e07c00', marginTop: 4 }}>
                           Counter: ₹{b.counter_price}/kg
                         </div>
                       )}

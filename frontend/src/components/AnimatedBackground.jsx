@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 function FloatingOrb({ size, top, left, color, duration }) {
   return (
@@ -8,7 +8,7 @@ function FloatingOrb({ size, top, left, color, duration }) {
       background: `radial-gradient(circle, ${color} 0%, transparent 70%)`,
       top, left,
       filter: 'blur(80px)',
-      opacity: 0.12,
+      opacity: 0.06,
       animation: `orbFloat ${duration}s ease-in-out infinite`,
       pointerEvents: 'none',
     }} />
@@ -40,8 +40,8 @@ export default function AnimatedBackground({ withParticles = true }) {
         vx: (Math.random() - 0.5) * 0.4,
         vy: (Math.random() - 0.5) * 0.4,
         r: Math.random() * 1.5 + 0.5,
-        color: Math.random() > 0.5 ? '#00ff9d' : '#00d4ff',
-        opacity: Math.random() * 0.3 + 0.2,
+        color: Math.random() > 0.5 ? '#22a855' : '#2196a8',
+        opacity: Math.random() * 0.2 + 0.05,
       })
     }
 
@@ -70,7 +70,7 @@ export default function AnimatedBackground({ withParticles = true }) {
             ctx.beginPath()
             ctx.moveTo(particles[i].x, particles[i].y)
             ctx.lineTo(particles[j].x, particles[j].y)
-            ctx.strokeStyle = `rgba(0,255,157,${0.08 * (1 - dist / 120)})`
+            ctx.strokeStyle = `rgba(34, 139, 87,${0.06 * (1 - dist / 120)})`
             ctx.lineWidth = 0.5
             ctx.stroke()
           }
@@ -91,18 +91,18 @@ export default function AnimatedBackground({ withParticles = true }) {
     <div style={{ position: 'fixed', inset: 0, zIndex: 0, overflow: 'hidden', pointerEvents: 'none' }}>
       <div style={{
         position: 'absolute', inset: 0,
-        background: 'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(0,80,40,0.25) 0%, transparent 70%)',
+        background: 'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(34, 139, 87, 0.08) 0%, transparent 70%)',
       }} />
       <div style={{
         position: 'absolute', inset: 0,
-        backgroundImage: 'linear-gradient(rgba(0,255,157,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,157,0.03) 1px, transparent 1px)',
+        backgroundImage: 'linear-gradient(rgba(34, 139, 87, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(34, 139, 87, 0.04) 1px, transparent 1px)',
         backgroundSize: '50px 50px',
       }} />
-      <canvas ref={canvasRef} style={{ position: 'absolute', inset: 0, opacity: 0.7 }} />
-      <FloatingOrb size={400} top="-10%" left="-10%" color="rgba(0,255,157,1)" duration={18} />
-      <FloatingOrb size={350} top="30%" left="70%" color="rgba(0,212,255,1)" duration={22} />
-      <FloatingOrb size={300} top="70%" left="20%" color="rgba(180,79,255,1)" duration={15} />
-      <FloatingOrb size={250} top="10%" left="80%" color="rgba(0,255,157,1)" duration={25} />
+      <canvas ref={canvasRef} style={{ position: 'absolute', inset: 0, opacity: 0.5 }} />
+      <FloatingOrb size={400} top="-10%" left="-10%" color="rgba(34, 139, 87, 1)" duration={18} />
+      <FloatingOrb size={350} top="30%" left="70%" color="rgba(33, 150, 168, 1)" duration={22} />
+      <FloatingOrb size={300} top="70%" left="20%" color="rgba(34, 139, 87, 1)" duration={15} />
+      <FloatingOrb size={250} top="10%" left="80%" color="rgba(33, 150, 168, 1)" duration={25} />
       <style>{`
         @keyframes orbFloat {
           0%,100% { transform: translate(0,0) scale(1); }

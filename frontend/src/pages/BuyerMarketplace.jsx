@@ -5,7 +5,7 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'rec
 import { Search, X, LogOut, ShoppingCart, CheckCircle } from 'lucide-react'
 import api from '../api'
 
-const scoreColor = (s) => (s >= 75 ? '#00ff9d' : s >= 40 ? '#ffb800' : '#ff2d55')
+const scoreColor = (s) => (s >= 75 ? '#22a855' : s >= 40 ? '#e07c00' : '#d93025')
 const scoreBadgeClass = (s) => (s >= 75 ? 'badge-green' : s >= 40 ? 'badge-amber' : 'badge-red')
 const riskLabel = (s) => (s >= 75 ? 'Healthy' : s >= 50 ? 'Good' : s >= 25 ? 'At Risk' : 'Critical')
 
@@ -18,7 +18,7 @@ function MiniHealthGauge({ score }) {
   return (
     <svg width="40" height="40" viewBox="0 0 40 40" style={{ flexShrink: 0 }}>
       <circle cx={cx} cy={cy} r={r} fill="none"
-        stroke="rgba(255,255,255,0.07)" strokeWidth={3.5} />
+        stroke="rgba(34, 139, 87, 0.12)" strokeWidth={3.5} />
       <circle cx={cx} cy={cy} r={r} fill="none"
         stroke={color} strokeWidth={3.5}
         strokeDasharray={circ} strokeDashoffset={offset}
@@ -39,14 +39,14 @@ function SensorChip({ icon, value, unit, warn }) {
   return (
     <div style={{
       display: 'flex', flexDirection: 'column', alignItems: 'center',
-      background: warn ? 'rgba(255,45,85,0.06)' : 'rgba(255,255,255,0.04)',
-      border: `1px solid ${warn ? 'rgba(255,45,85,0.2)' : 'rgba(0,255,157,0.08)'}`,
+      background: warn ? 'rgba(217, 48, 37,0.06)' : 'rgba(34, 139, 87,0.05)',
+      border: `1px solid ${warn ? 'rgba(217, 48, 37,0.2)' : 'rgba(34, 139, 87,0.15)'}`,
       borderRadius: 8, padding: '6px 10px', flex: 1, minWidth: 0,
     }}>
-      <div style={{ fontSize: '0.82rem', fontWeight: 700, color: warn ? '#ff2d55' : '#e8f4f0' }}>
-        {value.toFixed(1)}<span style={{ fontSize: '0.62rem', color: '#5a8a7a', marginLeft: 2 }}>{unit}</span>
+      <div style={{ fontSize: '0.82rem', fontWeight: 700, color: warn ? '#d93025' : '#1a2e22' }}>
+        {value.toFixed(1)}<span style={{ fontSize: '0.62rem', color: '#3d6b50', marginLeft: 2 }}>{unit}</span>
       </div>
-      <div style={{ fontSize: '0.62rem', color: '#5a8a7a', marginTop: 1 }}>{icon}</div>
+      <div style={{ fontSize: '0.62rem', color: '#3d6b50', marginTop: 1 }}>{icon}</div>
     </div>
   )
 }
@@ -74,10 +74,10 @@ function ProduceCard({ listing, onBid, index }) {
       {/* Header: name + mini gauge */}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 10 }}>
         <div style={{ flex: 1, minWidth: 0 }}>
-          <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#e8f4f0', marginBottom: 4, lineHeight: 1.3 }}>
+          <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#1a2e22', marginBottom: 4, lineHeight: 1.3 }}>
             {listing.produce_name}
           </h3>
-          <div style={{ fontSize: '0.75rem', color: '#5a8a7a' }}>
+          <div style={{ fontSize: '0.75rem', color: '#3d6b50' }}>
             📍 {listing.farmer_location || 'India'} · {listing.farmer_name || 'Farmer'}
           </div>
         </div>
@@ -89,9 +89,9 @@ function ProduceCard({ listing, onBid, index }) {
         <div style={{
           display: 'inline-flex', alignItems: 'center', gap: 5, alignSelf: 'flex-start',
           padding: '4px 12px', borderRadius: 100,
-          background: 'linear-gradient(90deg, rgba(0,255,157,0.08), rgba(0,212,255,0.08))',
-          border: '1px solid rgba(0,255,157,0.25)',
-          fontSize: '0.68rem', fontWeight: 700, color: '#00ff9d', letterSpacing: '0.05em',
+          background: 'linear-gradient(90deg, rgba(34, 139, 87,0.08), rgba(33, 150, 168,0.08))',
+          border: '1px solid rgba(34, 139, 87,0.25)',
+          fontSize: '0.68rem', fontWeight: 700, color: '#22a855', letterSpacing: '0.05em',
           backgroundSize: '200% 200%', animation: 'holographic 4s ease infinite',
         }}>
           <CheckCircle size={10} /> ✓ VERIFIED
@@ -119,11 +119,11 @@ function ProduceCard({ listing, onBid, index }) {
         <div>
           <div style={{
             fontFamily: 'Space Grotesk', fontSize: '1.4rem', fontWeight: 800,
-            color: '#00ff9d', textShadow: '0 0 8px rgba(0,255,157,0.35)',
+            color: '#22a855', textShadow: 'none',
           }}>
             ₹{listing.asking_price_per_kg}/kg
           </div>
-          <div style={{ fontSize: '0.7rem', color: '#5a8a7a', marginTop: 2 }}>
+          <div style={{ fontSize: '0.7rem', color: '#3d6b50', marginTop: 2 }}>
             {listing.quantity_kg} kg available
           </div>
         </div>
@@ -176,25 +176,25 @@ function BidModal({ listing, onClose, onBidPlaced }) {
         </div>
 
         {/* Listing summary */}
-        <div className="card mb-4" style={{ padding: '14px 16px', border: '1px solid rgba(0,255,157,0.15)' }}>
+        <div className="card mb-4" style={{ padding: '14px 16px', border: '1px solid rgba(34, 139, 87,0.15)' }}>
           <div className="flex items-center justify-between">
             <div>
-              <div style={{ fontWeight: 700, color: '#e8f4f0' }}>{listing.produce_name}</div>
-              <div style={{ fontSize: '0.8rem', color: '#5a8a7a', marginTop: 3 }}>
+              <div style={{ fontWeight: 700, color: '#1a2e22' }}>{listing.produce_name}</div>
+              <div style={{ fontSize: '0.8rem', color: '#3d6b50', marginTop: 3 }}>
                 {listing.quantity_kg} kg · by {listing.farmer_name}
               </div>
             </div>
             {listing.health_score != null && <MiniHealthGauge score={listing.health_score} />}
           </div>
-          <div style={{ fontSize: '0.78rem', color: '#5a8a7a', marginTop: 10 }}>
-            Asking: <span style={{ color: '#ffb800', fontWeight: 600 }}>₹{listing.asking_price_per_kg}/kg</span>
+          <div style={{ fontSize: '0.78rem', color: '#3d6b50', marginTop: 10 }}>
+            Asking: <span style={{ color: '#e07c00', fontWeight: 600 }}>₹{listing.asking_price_per_kg}/kg</span>
           </div>
         </div>
 
         {/* 24h health chart */}
         {detail?.sensor_history?.length > 0 && (
           <div style={{ marginBottom: 18 }}>
-            <div style={{ fontSize: '0.72rem', color: '#5a8a7a', marginBottom: 8, letterSpacing: '0.05em' }}>
+            <div style={{ fontSize: '0.72rem', color: '#3d6b50', marginBottom: 8, letterSpacing: '0.05em' }}>
               24h HEALTH HISTORY
             </div>
             <ResponsiveContainer width="100%" height={80}>
@@ -202,10 +202,10 @@ function BidModal({ listing, onClose, onBidPlaced }) {
                 <XAxis hide />
                 <YAxis domain={[0, 100]} hide />
                 <Tooltip
-                  contentStyle={{ background: 'rgba(4,12,22,0.95)', border: '1px solid rgba(0,255,157,0.2)', borderRadius: 8, fontSize: '0.75rem', fontFamily: 'Space Grotesk' }}
+                  contentStyle={{ background: 'rgba(255,255,255,0.95)', border: '1px solid rgba(34, 139, 87,0.2)', borderRadius: 8, fontSize: '0.75rem', fontFamily: 'Space Grotesk' }}
                   formatter={(v) => [v?.toFixed(1), 'Health']}
                 />
-                <Line type="monotone" dataKey="health_score" stroke="#00ff9d" strokeWidth={2} dot={false} />
+                <Line type="monotone" dataKey="health_score" stroke="#22a855" strokeWidth={2} dot={false} />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -214,11 +214,11 @@ function BidModal({ listing, onClose, onBidPlaced }) {
         {success ? (
           <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
             style={{ textAlign: 'center', padding: '28px 0' }}>
-            <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'rgba(0,255,157,0.1)', border: '2px solid rgba(0,255,157,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', fontSize: '1.8rem' }}>
+            <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'rgba(34, 139, 87,0.1)', border: '2px solid rgba(34, 139, 87,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', fontSize: '1.8rem' }}>
               ✓
             </div>
-            <h3 style={{ color: '#00ff9d', marginBottom: 8, fontFamily: 'Space Grotesk' }}>Offer Sent!</h3>
-            <p style={{ color: '#5a8a7a', fontSize: '0.88rem' }}>
+            <h3 style={{ color: '#22a855', marginBottom: 8, fontFamily: 'Space Grotesk' }}>Offer Sent!</h3>
+            <p style={{ color: '#3d6b50', fontSize: '0.88rem' }}>
               Sent directly to farmer — zero middlemen!
             </p>
             <button className="btn btn-outline btn-sm" style={{ marginTop: 20 }} onClick={onClose}>Close</button>
@@ -232,7 +232,7 @@ function BidModal({ listing, onClose, onBidPlaced }) {
               <label>Your Offer (₹/kg)</label>
               <input type="number" min="0.01" step="0.01" value={price}
                 onChange={(e) => setPrice(e.target.value)} required
-                style={{ fontSize: '1.2rem', fontFamily: 'Space Grotesk', fontWeight: 700, color: '#00ff9d' }} />
+                style={{ fontSize: '1.2rem', fontFamily: 'Space Grotesk', fontWeight: 700, color: '#22a855' }} />
             </div>
             <div className="form-group">
               <label>Message to Farmer (optional)</label>
@@ -302,14 +302,14 @@ export default function BuyerMarketplace() {
 
       {/* ── HEADER ──────────────────────────────────── */}
       <header style={{
-        background: 'rgba(2,4,8,0.88)', backdropFilter: 'blur(20px)',
-        borderBottom: '1px solid rgba(0,255,157,0.1)',
+        background: 'rgba(255,255,255,0.88)', backdropFilter: 'blur(20px)',
+        borderBottom: '1px solid rgba(34, 139, 87,0.1)',
         padding: '14px 28px', position: 'sticky', top: 0, zIndex: 100,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
           {/* Logo */}
-          <div style={{ fontFamily: 'Orbitron', fontSize: '1rem', fontWeight: 700, color: '#00ff9d', letterSpacing: '0.08em', whiteSpace: 'nowrap' }}>
+          <div style={{ fontFamily: 'Orbitron', fontSize: '1rem', fontWeight: 700, color: '#22a855', letterSpacing: '0.08em', whiteSpace: 'nowrap' }}>
             🌿 ECO-ASSIST
           </div>
 
@@ -319,11 +319,11 @@ export default function BuyerMarketplace() {
               <button key={tab} onClick={() => setTab(tab)}
                 style={{
                   padding: '7px 16px', borderRadius: 8, border: 'none',
-                  background: activeTab === tab ? 'rgba(0,255,157,0.1)' : 'transparent',
-                  color: activeTab === tab ? '#00ff9d' : '#5a8a7a',
+                  background: activeTab === tab ? 'rgba(34, 139, 87,0.1)' : 'transparent',
+                  color: activeTab === tab ? '#22a855' : '#3d6b50',
                   fontFamily: 'Space Grotesk', fontWeight: 600, fontSize: '0.85rem',
-                  cursor: 'none', transition: 'all 0.2s',
-                  borderBottom: activeTab === tab ? '2px solid #00ff9d' : '2px solid transparent',
+                  cursor: 'pointer', transition: 'all 0.2s',
+                  borderBottom: activeTab === tab ? '2px solid #22a855' : '2px solid transparent',
                 }}>
                 {tab === 'market' ? '🏪 Marketplace' : `💬 My Bids${myBids.length ? ` (${myBids.length})` : ''}`}
               </button>
@@ -332,7 +332,7 @@ export default function BuyerMarketplace() {
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <span style={{ fontSize: '0.82rem', color: '#5a8a7a', fontFamily: 'Space Grotesk' }}>{user.full_name}</span>
+          <span style={{ fontSize: '0.82rem', color: '#3d6b50', fontFamily: 'Space Grotesk' }}>{user.full_name}</span>
           <button className="btn btn-ghost btn-sm" onClick={logout}><LogOut size={14} /></button>
         </div>
       </header>
@@ -346,20 +346,20 @@ export default function BuyerMarketplace() {
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
               style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28, flexWrap: 'wrap' }}>
               <div style={{ position: 'relative', flex: 1, minWidth: 220 }}>
-                <Search size={15} style={{ position: 'absolute', left: 13, top: '50%', transform: 'translateY(-50%)', color: '#5a8a7a' }} />
+                <Search size={15} style={{ position: 'absolute', left: 13, top: '50%', transform: 'translateY(-50%)', color: '#3d6b50' }} />
                 <input
                   style={{
                     width: '100%',
-                    background: 'rgba(6,20,35,0.7)',
-                    border: '1px solid rgba(0,255,157,0.12)',
-                    borderRadius: 10, color: '#e8f4f0',
+                    background: 'rgba(255,255,255,0.7)',
+                    border: '1px solid rgba(34, 139, 87,0.12)',
+                    borderRadius: 10, color: '#1a2e22',
                     padding: '11px 14px 11px 38px',
                     outline: 'none', fontFamily: 'Inter', fontSize: '0.9rem',
                     backdropFilter: 'blur(12px)',
                     transition: 'border-color 0.25s, box-shadow 0.25s',
                   }}
-                  onFocus={(e) => { e.target.style.borderColor = 'rgba(0,255,157,0.4)'; e.target.style.boxShadow = '0 0 0 3px rgba(0,255,157,0.08)' }}
-                  onBlur={(e) => { e.target.style.borderColor = 'rgba(0,255,157,0.12)'; e.target.style.boxShadow = 'none' }}
+                  onFocus={(e) => { e.target.style.borderColor = 'rgba(34, 139, 87,0.4)'; e.target.style.boxShadow = '0 0 0 3px rgba(34, 139, 87,0.08)' }}
+                  onBlur={(e) => { e.target.style.borderColor = 'rgba(34, 139, 87,0.12)'; e.target.style.boxShadow = 'none' }}
                   placeholder="Search tomatoes, onions, wheat…"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
@@ -371,11 +371,11 @@ export default function BuyerMarketplace() {
                   <button key={c.key}
                     onClick={() => setFilter(c.key)}
                     style={{
-                      padding: '9px 16px', borderRadius: 8, border: `1px solid ${filter === c.key ? 'rgba(0,255,157,0.4)' : 'rgba(0,255,157,0.1)'}`,
-                      background: filter === c.key ? 'rgba(0,255,157,0.1)' : 'transparent',
-                      color: filter === c.key ? '#00ff9d' : '#5a8a7a',
+                      padding: '9px 16px', borderRadius: 8, border: `1px solid ${filter === c.key ? 'rgba(34, 139, 87,0.4)' : 'rgba(34, 139, 87,0.1)'}`,
+                      background: filter === c.key ? 'rgba(34, 139, 87,0.1)' : 'transparent',
+                      color: filter === c.key ? '#22a855' : '#3d6b50',
                       fontFamily: 'Space Grotesk', fontWeight: 600, fontSize: '0.82rem',
-                      cursor: 'none', transition: 'all 0.2s', whiteSpace: 'nowrap',
+                      cursor: 'pointer', transition: 'all 0.2s', whiteSpace: 'nowrap',
                     }}>
                     {c.label}
                   </button>
@@ -385,13 +385,13 @@ export default function BuyerMarketplace() {
 
             {/* Grid */}
             {loading ? (
-              <div style={{ textAlign: 'center', padding: 80, color: '#5a8a7a' }}>
-                <div style={{ width: 40, height: 40, border: '2px solid rgba(0,255,157,0.2)', borderTopColor: '#00ff9d', borderRadius: '50%', animation: 'spinO 1s linear infinite', margin: '0 auto 16px' }} />
+              <div style={{ textAlign: 'center', padding: 80, color: '#3d6b50' }}>
+                <div style={{ width: 40, height: 40, border: '2px solid rgba(34, 139, 87,0.2)', borderTopColor: '#22a855', borderRadius: '50%', animation: 'spinO 1s linear infinite', margin: '0 auto 16px' }} />
                 Loading listings…
               </div>
             ) : listings.length === 0 ? (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                style={{ textAlign: 'center', padding: 80, color: '#5a8a7a' }}>
+                style={{ textAlign: 'center', padding: 80, color: '#3d6b50' }}>
                 <div style={{ fontSize: '3.5rem', marginBottom: 16, opacity: 0.4 }}>🌾</div>
                 <div style={{ fontFamily: 'Space Grotesk', fontWeight: 600 }}>No listings found</div>
                 <div style={{ fontSize: '0.85rem', marginTop: 6 }}>Try adjusting your search or filters</div>
@@ -408,11 +408,11 @@ export default function BuyerMarketplace() {
           /* ── MY BIDS TAB ────────────────────────── */
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}>
-            <h2 style={{ fontFamily: 'Orbitron', fontSize: '1.1rem', color: '#e8f4f0', marginBottom: 24, letterSpacing: '0.05em' }}>
+            <h2 style={{ fontFamily: 'Orbitron', fontSize: '1.1rem', color: '#1a2e22', marginBottom: 24, letterSpacing: '0.05em' }}>
               MY OFFERS
             </h2>
             {myBids.length === 0 ? (
-              <div style={{ textAlign: 'center', padding: 80, color: '#5a8a7a' }}>
+              <div style={{ textAlign: 'center', padding: 80, color: '#3d6b50' }}>
                 <ShoppingCart size={44} style={{ marginBottom: 16, opacity: 0.3 }} />
                 <div style={{ fontFamily: 'Space Grotesk', fontWeight: 600 }}>No offers placed yet</div>
                 <button className="btn btn-primary btn-sm" style={{ marginTop: 16 }} onClick={() => setTab('market')}>
@@ -428,24 +428,24 @@ export default function BuyerMarketplace() {
                     className="glass-card" style={{ padding: '20px 22px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
                       <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ fontWeight: 700, fontSize: '1.05rem', color: '#e8f4f0' }}>
+                        <div style={{ fontWeight: 700, fontSize: '1.05rem', color: '#1a2e22' }}>
                           {b.produce_name || 'Produce'}
                         </div>
-                        <div style={{ fontSize: '0.85rem', color: '#5a8a7a', marginTop: 5 }}>
+                        <div style={{ fontSize: '0.85rem', color: '#3d6b50', marginTop: 5 }}>
                           Your offer:{' '}
-                          <span style={{ color: '#00ff9d', fontWeight: 700, fontFamily: 'Space Grotesk' }}>
+                          <span style={{ color: '#22a855', fontWeight: 700, fontFamily: 'Space Grotesk' }}>
                             ₹{b.offered_price_per_kg}/kg
                           </span>
                           {b.message && (
-                            <span style={{ color: '#3a5a4a' }}> · "{b.message}"</span>
+                            <span style={{ color: '#7a9e8a' }}> · "{b.message}"</span>
                           )}
                         </div>
                         {b.counter_price && (
-                          <div style={{ fontSize: '0.85rem', color: '#ffb800', marginTop: 5 }}>
+                          <div style={{ fontSize: '0.85rem', color: '#e07c00', marginTop: 5 }}>
                             🔄 Counter offer: ₹{b.counter_price}/kg
                           </div>
                         )}
-                        <div style={{ fontSize: '0.72rem', color: '#3a5a4a', marginTop: 6 }}>
+                        <div style={{ fontSize: '0.72rem', color: '#7a9e8a', marginTop: 6 }}>
                           {new Date(b.created_at).toLocaleString()}
                         </div>
                       </div>

@@ -22,7 +22,7 @@ export default function PageTransition({ children }) {
         transition={{ duration: 0.6, times: [0, 0.4, 0.6, 1], ease: 'easeInOut' }}
         style={{
           position: 'fixed', top: 0, left: 0, right: 0, height: 3,
-          background: 'linear-gradient(90deg, #00ff9d, #00d4ff, #b44fff)',
+          background: 'linear-gradient(90deg, #22a855, #2196a8, #7c4dbe)',
           zIndex: 9000, pointerEvents: 'none',
         }}
       />

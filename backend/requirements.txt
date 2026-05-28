@@ -10,3 +10,4 @@ paho-mqtt
 httpx
 python-dotenv
 Pillow
+anthropic

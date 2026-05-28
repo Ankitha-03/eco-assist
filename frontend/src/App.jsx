@@ -10,6 +10,8 @@ import BuyerLogin from './pages/BuyerLogin'
 import Register from './pages/Register'
 import FarmerDashboard from './pages/FarmerDashboard'
 import BuyerMarketplace from './pages/BuyerMarketplace'
+import MobileCamera from './pages/MobileCamera'
+import QRCamera from './pages/QRCamera'
 
 function AnimatedRoutes() {
   const location = useLocation()
@@ -26,6 +28,8 @@ function AnimatedRoutes() {
         <Route path="/buyer/marketplace" element={
           <AuthGuard requiredRole="buyer"><BuyerMarketplace /></AuthGuard>
         } />
+        <Route path="/camera" element={<MobileCamera />} />
+        <Route path="/qr-camera" element={<QRCamera />} />
       </Routes>
     </AnimatePresence>
   )
@@ -36,30 +40,28 @@ export default function App() {
     <BrowserRouter>
       <CustomCursor />
       <AnimatedBackground />
-      <div className="scanline" />
       <Toaster
         position="top-right"
         toastOptions={{
           style: {
-            background: 'rgba(4,12,22,0.95)',
-            border: '1px solid rgba(0,255,157,0.3)',
-            color: '#e8f4f0',
-            backdropFilter: 'blur(20px)',
+            background: '#ffffff',
+            border: '1px solid rgba(34, 139, 87, 0.25)',
+            color: '#1a2e22',
+            boxShadow: '0 4px 20px rgba(34, 139, 87, 0.1)',
             fontFamily: 'Space Grotesk',
             fontSize: '0.875rem',
             borderRadius: '10px',
-            boxShadow: '0 0 20px rgba(0,255,157,0.15)',
           },
           success: {
-            iconTheme: { primary: '#00ff9d', secondary: '#020408' },
+            iconTheme: { primary: '#22a855', secondary: '#ffffff' },
           },
           error: {
-            iconTheme: { primary: '#ff2d55', secondary: '#020408' },
+            iconTheme: { primary: '#d93025', secondary: '#ffffff' },
             style: {
-              background: 'rgba(4,12,22,0.95)',
-              border: '1px solid rgba(255,45,85,0.3)',
-              color: '#e8f4f0',
-              backdropFilter: 'blur(20px)',
+              background: '#ffffff',
+              border: '1px solid rgba(217, 48, 37, 0.25)',
+              color: '#1a2e22',
+              boxShadow: '0 4px 20px rgba(217, 48, 37, 0.1)',
               fontFamily: 'Space Grotesk',
               fontSize: '0.875rem',
               borderRadius: '10px',

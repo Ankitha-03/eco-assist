@@ -3,15 +3,15 @@ export default function LoadingSpinner({ size = 40, center = false }) {
     <div style={{ position: 'relative', width: size, height: size, display: 'inline-block' }}>
       <div style={{
         position: 'absolute', inset: 0,
-        border: '2px solid rgba(0,212,255,0.2)',
-        borderTopColor: '#00d4ff',
+        border: '2px solid rgba(33, 150, 168,0.2)',
+        borderTopColor: '#2196a8',
         borderRadius: '50%',
         animation: 'spinO 1.1s linear infinite',
       }} />
       <div style={{
         position: 'absolute', inset: size * 0.18,
-        border: '2px solid rgba(0,255,157,0.2)',
-        borderTopColor: '#00ff9d',
+        border: '2px solid rgba(34, 139, 87,0.2)',
+        borderTopColor: '#22a855',
         borderRadius: '50%',
         animation: 'spinI 0.75s linear infinite reverse',
       }} />
