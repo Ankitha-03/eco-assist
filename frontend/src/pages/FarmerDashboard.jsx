@@ -8,7 +8,7 @@ import { Bell, WifiOff, X, Plus, LogOut } from 'lucide-react'
 import api, { WS_BASE } from '../api'
 import CornerBrackets from '../components/CornerBrackets'
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+const API_BASE = import.meta.env.VITE_API_URL || 'http://https://eco-assist-backend.onrender.com'
 
 /* ── Sparkline ────────────────────────────────────────────── */
 function Sparkline({ data, color = '#22a855' }) {
