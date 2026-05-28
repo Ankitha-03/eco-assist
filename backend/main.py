@@ -4,7 +4,9 @@ import os
 import asyncio
 import logging
 
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Depends
+from sqlalchemy.ext.asyncio import AsyncSession
+from db import get_db
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
@@ -39,15 +41,6 @@ async def preflight_handler(request: Request, rest_of_path: str):
             "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS, PATCH",
             "Access-Control-Allow-Headers": "*",
         }
-    )
-
-@app.exception_handler(Exception)
-async def global_exception_handler(request: Request, exc: Exception):
-    logger.error(f"Global exception: {exc}")
-    return JSONResponse(
-        status_code=500,
-        content={"detail": str(exc), "error_type": type(exc).__name__},
-        headers={"Access-Control-Allow-Origin": "*"}
     )
 
 app.include_router(auth.router)
@@ -146,5 +139,19 @@ async def root():
 
 
 @app.get("/health")
-async def health():
-    return {"status": "ok"}
+async def health(db: AsyncSession = Depends(get_db)):
+    status = {"status": "ok", "db_connection": False, "users_table_exists": False, "error": None}
+    try:
+        # Check connection
+        await db.execute(text("SELECT 1"))
+        status["db_connection"] = True
+        
+        # Check if users table exists
+        result = await db.execute(text("SELECT to_regclass('public.users')"))
+        if result.fetchone()[0] is not None:
+            status["users_table_exists"] = True
+        else:
+            status["error"] = "users table does not exist. Schema initialization might have failed."
+    except Exception as e:
+        status["error"] = str(e)
+    return status
