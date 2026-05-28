@@ -107,9 +107,27 @@ def _start_mqtt():
         logger.warning(f"MQTT startup failed: {e}")
 
 
+from sqlalchemy import text
+from db import engine
+
 @app.on_event("startup")
 async def startup():
     _start_mqtt()
+    
+    # Initialize database tables
+    try:
+        schema_path = os.path.join(os.path.dirname(__file__), "schema.sql")
+        if os.path.exists(schema_path):
+            with open(schema_path, "r") as f:
+                statements = f.read().split(";")
+            async with engine.begin() as conn:
+                for stmt in statements:
+                    if stmt.strip():
+                        await conn.execute(text(stmt))
+            logger.info("Database tables initialized successfully.")
+    except Exception as e:
+        logger.error(f"Failed to initialize database tables: {e}")
+
     logger.info("Eco-Assist API started successfully")
 
 
